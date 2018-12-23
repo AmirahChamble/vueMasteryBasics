@@ -1,4 +1,10 @@
 Vue.component('product',{
+    props:{
+        premium:{
+            type: Boolean,
+            required: true
+        }
+    },
     template:   `
     <div>
     <div class="product">
@@ -26,6 +32,9 @@ Vue.component('product',{
         <p v-if="variants[selectedVariant].quantity > 10 ">In Stock</p>
         <p v-else-if="10 >= variants[selectedVariant].quantity && variants[selectedVariant].quantity > 0 "> Almost Sold Out !</p>
         <p v-else>Out of Stock</p>
+        <p>Premium Member : {{ premium  }}</p>
+        <p v-if="premium"> Shipping is $2.99 </p>
+        <p v-else> Shipping is $4.99 </p>
 
         <ul>
             <li v-for="detail in details"> {{ detail }} </li>
@@ -102,56 +111,5 @@ Vue.component('product',{
 
 var app = new Vue ({
     el: "#app",
-    // data: {
-    //     brand : "Your",
-    //     product : "Basic Chucks",
-    //     inventory: 20,
-    //     cart: 0,
-    //     details: ["awesome", "super cool", "such a great deal", "buy it all ready"],
-    //     selectedVariant: 0,
-    //     variants: [
-    //         {
-    //             id: '0',
-    //             font: 'white',
-    //             color: 'RED',
-    //             quantity: '20',
-    //             img: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=943&q=80',
-    //         },
-    //         {
-    //             id: '1',
-    //             font: 'black',
-    //             color: 'WHITE',
-    //             quantity: '20',
-    //             img: 'https://images.unsplash.com/photo-1526765992122-6abcb1e0f4fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
-    //         }
-    //     ]
-    // },
-    // methods:{
-    //     addToCart: function(){
-            
-    //         if(this.variants[this.selectedVariant].quantity > 0){
-    //             this.cart++;
-    //             this.variants[this.selectedVariant].quantity--;
-    //             //console.log("quantity : " + this.variants[this.selectedVariant].quantity);
-    //         }
-    //     },
-    //     updateProduct: function(index){
-    //         this.selectedVariant = index;
-    //         //console.log(index);
-
-    //     }
-    // },
-    // computed:{
-    //     title(){
-    //         return this.brand + ' ' + this.product;
-    //     },
-    //     image(){
-    //         return this.variants[this.selectedVariant].img;
-    //     },
-    //     inStock(){
-    //         return this.variants[this.selectedVariant].quantity;
-    //     }
-    // },
-    
   
 })
