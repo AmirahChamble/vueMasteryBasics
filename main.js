@@ -28,7 +28,7 @@ Vue.component('product',{
     </div>
 
     <div class="product-info">
-        <h1 > {{ product }}  </h1>
+        <h1 > {{ product }} ( {{ variants[selectedVariant].color }} ) </h1>
         <p v-if="variants[selectedVariant].quantity > 10 ">In Stock</p>
         <p v-else-if="10 >= variants[selectedVariant].quantity && variants[selectedVariant].quantity > 0 "> Almost Sold Out !</p>
         <p v-else>Out of Stock</p>
@@ -47,8 +47,7 @@ Vue.component('product',{
                 v-bind:disabled ="!inStock"
             > Add to Cart </button>
            
-            <p v-if="cart == 0"> Cart ( EMPTY ) </p>
-            <p v-else > Cart ({{cart}}) </p>
+            
         </div>
     </div>
 </div>
@@ -59,7 +58,6 @@ Vue.component('product',{
             brand : "Your",
             product : "Basic Chucks",
             inventory: 20,
-            cart: 0,
             details: ["awesome", "super cool", "such a great deal", "buy it all ready"],
             selectedVariant: 0,
             variants: [
@@ -82,12 +80,8 @@ Vue.component('product',{
     },
     methods:{
         addToCart: function(){
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].id );
             
-            if(this.variants[this.selectedVariant].quantity > 0){
-                this.cart++;
-                this.variants[this.selectedVariant].quantity--;
-                //console.log("quantity : " + this.variants[this.selectedVariant].quantity);
-            }
         },
         updateProduct: function(index){
             this.selectedVariant = index;
@@ -111,5 +105,15 @@ Vue.component('product',{
 
 var app = new Vue ({
     el: "#app",
+    data: {
+        cart: [ ],
+        premium: true
+    },
+    methods:{
+        updateCart(id){
+                this.cart.push(id);
+        }
+    }
+
   
 })

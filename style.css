@@ -4,31 +4,35 @@
     margin: 0px;
 }
 body{
+    width: 100vw;
     font-family: 'Open sans', sans-serif;
-    text-align: left;
     color: #292e31;
 }
 .nav-bar{
-    width: 100%;
+    width: 100vw;
     height: 40px;
     background: linear-gradient(135deg, orange, pink);
     border-bottom: 2px solid #292e31;
 }
 
-
+#shoppingCart{
+    width: 95vw;
+    text-align: right;
+}
 
 #app{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
+
 .product{
-    width: 100%;
-    padding: 24px;
+    padding: 24px 0px;
+    padding-left: 24px; 
     font-family: 'Luckiest Guy', cursive;
 }
 .product h1{
-    padding: 12px 0px;
+    padding: 0px 0px;
     font-size: 3em;
     letter-spacing: 1px;
 }
@@ -111,3 +115,4 @@ ul{
     font-size: 1em;
     transition: .5s ease-in-out;
 }
+
