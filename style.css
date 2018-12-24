@@ -116,3 +116,36 @@ ul{
     transition: .5s ease-in-out;
 }
 
+.product-form{
+    margin: 12px;
+    padding: 24px;
+    background: #fff;
+    border: 2px solid #292e31;
+    position: relative;
+}
+
+.product-form p {
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label{
+    margin-right: 12px;
+}
+
+#name, #review, #rating{
+    width: 80%;
+}
+
+#submit{
+    position: absolute;
+    width: 30%;
+    right: 0px;
+    margin-right: 24px;
+    margin-top: 12px;
+}
+
