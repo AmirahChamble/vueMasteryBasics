@@ -51,7 +51,7 @@ Vue.component('product',{
                             </div>
                         </div>
                     </div>
-                    <product-review/>
+                    <product-review @review-resubmitted="addReview"/>
                 </div>
     `,
     data(){
@@ -76,7 +76,8 @@ Vue.component('product',{
                     quantity: '20',
                     img: 'https://images.unsplash.com/photo-1526765992122-6abcb1e0f4fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
                 }
-            ]
+            ],
+            reviews: [ ]
         }
     },
     methods:{
@@ -88,6 +89,9 @@ Vue.component('product',{
             this.selectedVariant = index;
             //console.log(index);
 
+        },
+        addReview: function(productReview){
+            this.reviews.push(productReview);
         }
     },
     computed:{
@@ -105,7 +109,7 @@ Vue.component('product',{
 
 Vue.component('product-review',{
     template: ` 
-        <form class="product-form">
+        <form class="product-form" @submit.prevent="onSumbit">
             <p>
                 <label for="name" > Name: </label>
                 <input id="name" v-model="name">
@@ -118,7 +122,7 @@ Vue.component('product-review',{
 
             <p>
                 <label for="rating"> Rating: </label>
-                <select id="rating" v-model="rating"> 
+                <select id="rating" v-model.number="rating"> 
                     <option value="5" > 5 </option>
                     <option value="4" > 4 </option>
                     <option value="3" > 3 </option>
@@ -139,6 +143,19 @@ Vue.component('product-review',{
             name: " ",
             review: " ",
             rating: " "
+        }
+    },
+    methods:{
+        onSumbit(){
+            let productReview = {
+                name : this. name, 
+                review : this.review,
+                rating: this.rating,
+            }
+            this.$emit('review-resubmitted', productReview);
+            this.name = null;
+            this.review = null;
+            this.rating = null;
         }
     }
 })
