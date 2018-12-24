@@ -51,6 +51,21 @@ Vue.component('product',{
                             </div>
                         </div>
                     </div>
+
+                    <div>
+                        <h1> Reviews </h1>
+                        <p v-if="!reviews.length"> There are no reviews yet. </p>
+
+                        <ul>
+                            <li v-for="review in reviews" >
+                                <p>Name: {{ review.name }} </p>
+                                <p>Review: {{ review.review }} </p>
+                                <p>Ratint: {{ review.rating }} </p>
+                             </li>
+                        </ul>
+                    
+                    </div>
+
                     <product-review @review-resubmitted="addReview"/>
                 </div>
     `,
@@ -77,7 +92,7 @@ Vue.component('product',{
                     img: 'https://images.unsplash.com/photo-1526765992122-6abcb1e0f4fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
                 }
             ],
-            reviews: [ ]
+            reviews : [ ]
         }
     },
     methods:{
@@ -110,6 +125,13 @@ Vue.component('product',{
 Vue.component('product-review',{
     template: ` 
         <form class="product-form" @submit.prevent="onSumbit">
+
+            <p v-for=" errors.length ">
+                <b>Please correct the following errors: </b>
+                <ul>
+                    <li v-for=" error in errors"> {{ error }}</li>  
+                </ul>
+            </p>
             <p>
                 <label for="name" > Name: </label>
                 <input id="name" v-model="name">
@@ -140,24 +162,40 @@ Vue.component('product-review',{
     `,
     data(){
         return{
-            name: " ",
-            review: " ",
-            rating: " "
+            name: "",
+            review: "",
+            rating: "",
+            errors: []
         }
     },
     methods:{
         onSumbit(){
-            let productReview = {
-                name : this. name, 
-                review : this.review,
-                rating: this.rating,
+            if(this.name && this.review && this.rating){
+                let productReview = {
+                    name : this. name, 
+                    review : this.review,
+                    rating: this.rating,
+                }
+                this.$emit('review-resubmitted', productReview);
+                this.name = null;
+                this.review = null;
+                this.rating = null;
+            }else{
+                if(!this.name){
+                    this.errors.push("name required.")
+                }
+                if(!this.review){
+                    this.errors.push("review required.")
+                }
+                if(!this.rating){
+                    this.errors.push("rating required.")
+                }
             }
-            this.$emit('review-resubmitted', productReview);
-            this.name = null;
-            this.review = null;
-            this.rating = null;
         }
+        
     }
+            
+            
 })
 
 var app = new Vue ({
