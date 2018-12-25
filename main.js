@@ -52,21 +52,23 @@ Vue.component('product',{
                         </div>
                     </div>
 
-                    <div>
-                        <h1> Reviews </h1>
-                        <p v-if="!reviews.length"> There are no reviews yet. </p>
+                    <product-tabs/>
 
-                        <ul>
-                            <li v-for="review in reviews" >
-                                <p>Name: {{ review.name }} </p>
-                                <p>Review: {{ review.review }} </p>
-                                <p>Ratint: {{ review.rating }} </p>
-                             </li>
-                        </ul>
+                    // <div>
+                    //     <h1> Reviews </h1>
+                    //     <p v-if="!reviews.length"> There are no reviews yet. </p>
+
+                    //     <ul>
+                    //         <li v-for="review in reviews" >
+                    //             <p>Name: {{ review.name }} </p>
+                    //             <p>Review: {{ review.review }} </p>
+                    //             <p>Ratint: {{ review.rating }} </p>
+                    //          </li>
+                    //     </ul>
                     
-                    </div>
+                    // </div>
 
-                    <product-review @review-resubmitted="addReview"/>
+                    // <product-review @review-resubmitted="addReview"/>
                 </div>
     `,
     data(){
@@ -126,7 +128,7 @@ Vue.component('product-review',{
     template: ` 
         <form class="product-form" @submit.prevent="onSumbit">
 
-            <p v-for=" errors.length ">
+            <p v-if=" errors.length ">
                 <b>Please correct the following errors: </b>
                 <ul>
                     <li v-for=" error in errors"> {{ error }}</li>  
@@ -198,6 +200,25 @@ Vue.component('product-review',{
             
 })
 
+Vue.component('product-tabs', {
+    template: `
+    <div>
+        <span 
+            :class="{activeTab : selectedTab === tab}"
+            class="tabs"
+            v-for="(tab, index) in tabs"
+            :key="index"
+            @click = "selectedTab = tab" 
+            > {{ tab }} </span>
+    </div>
+    `,
+    data(){
+        return{
+            tabs: ["Reviews", "Make a Review"],
+            selectedTab: "Reviews"
+        }
+    }
+})
 var app = new Vue ({
     el: "#app",
     data: {
